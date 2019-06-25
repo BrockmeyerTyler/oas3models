@@ -1,6 +1,20 @@
 package oas3models
 
+type HTTPVerb string
+
+const (
+	HttpGet     = HTTPVerb("get")
+	HttpPut     = HTTPVerb("put")
+	HttpPost    = HTTPVerb("post")
+	HttpDelete  = HTTPVerb("delete")
+	HttpOptions = HTTPVerb("options")
+	HttpHead    = HTTPVerb("head")
+	HttpPatch   = HTTPVerb("patch")
+	HttpTrace   = HTTPVerb("trace")
+)
+
 type DataType string
+
 const (
 	DataTypeInteger  = DataType("integer")
 	DataTypeLong     = DataType("long")
@@ -16,11 +30,13 @@ const (
 )
 
 type MimeType string
+
 const (
 	MimeJson = MimeType("application/json")
 )
 
 type InRequest string
+
 const (
 	InPath   = InRequest("path")
 	InQuery  = InRequest("query")
@@ -29,6 +45,7 @@ const (
 )
 
 type StyleSetting string
+
 const (
 	StyleDefault        = StyleSetting("")
 	StyleMatrix         = StyleSetting("matrix")
@@ -41,6 +58,7 @@ const (
 )
 
 type SecurityType string
+
 const (
 	SecurityApiKey        = SecurityType("apiKey")
 	SecurityHttp          = SecurityType("http")
@@ -49,6 +67,7 @@ const (
 )
 
 type SecurityInRequest string
+
 const (
 	SecurityInQuery  = SecurityInRequest("query")
 	SecurityInHeader = SecurityInRequest("header")
@@ -56,6 +75,7 @@ const (
 )
 
 type HTTPAuthScheme string
+
 const (
 	AuthBasic       = HTTPAuthScheme("basic")
 	AuthBearer      = HTTPAuthScheme("bearer")
@@ -70,6 +90,7 @@ const (
 )
 
 type OAuthFlowType string
+
 const (
 	OAuthImplicit          = OAuthFlowType("implicit")
 	OAuthPassword          = OAuthFlowType("password")
