@@ -8,7 +8,7 @@ import (
 type RequestBodyDoc struct {
 	Description string
 	Required bool
-	Content *MediaTypeDoc
+	Content map[MimeType]*MediaTypeDoc
 }
 func (r *RequestBodyDoc) MarshalJSON() (_ []byte, err error) {
 	if r.Content == nil {
