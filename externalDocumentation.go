@@ -1,19 +1,21 @@
 package oas3models
 
 import (
-	"encoding/json"
 	"fmt"
 )
 
+// Allows referencing an external resource for extended documentation.
 type ExternalDocumentationDoc struct {
-	Description, Url string
+
+	// A short description of the target documentation. CommonMark syntax MAY be used for rich text representation.
+	Description string `json:"description,omitempty"`
+
+	// REQUIRED. The URL for the target documentation. Value MUST be in the format of a URL.
+	Url string `json:"url"`
 }
-func (e *ExternalDocumentationDoc) MarshalJSON() (_ []byte, err error) {
+func (e *ExternalDocumentationDoc) Validate() error {
 	if e.Url == "" {
-		return nil, fmt.Errorf("for external documentations, 'url' is required")
+		return fmt.Errorf("for external documentations, 'url' is required")
 	}
-	x := make(JSON)
-	marshalStrIfLen(e.Description, "description", x)
-	marshalStrIfLen(e.Url, "url", x)
-	return json.Marshal(x)
+	return nil
 }

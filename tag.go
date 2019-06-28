@@ -1,15 +1,23 @@
 package oas3models
 
-import "encoding/json"
+import "fmt"
 
+// Adds metadata to a single tag that is used by the Operation Object.
+// It is not mandatory to have a Tag Object per tag defined in the Operation Object instances.
 type TagDoc struct {
-	Name, Description string
-	ExternalDocs *ExternalDocumentationDoc
+
+	// REQUIRED. The name of the tag.
+	Name string `json:"name"`
+
+	// A short description for the tag. CommonMark syntax MAY be used for rich text representation.
+	Description string `json:"description,omitempty"`
+
+	// Additional external documentation for this tag.
+	ExternalDocs *ExternalDocumentationDoc `json:"externalDocs,omitempty"`
 }
-func (t *TagDoc) MarshalJSON() (_ []byte, err error) {
-	x := make(JSON)
-	if err = marshalObjIfNotNil(t.ExternalDocs, "externalDocs", x); err != nil {return}
-	marshalStrIfLen(t.Name, "name", x)
-	marshalStrIfLen(t.Description, "description", x)
-	return json.Marshal(x)
+func (t *TagDoc) Validate() error {
+	if t.Name == "" {
+		return fmt.Errorf("for tags, 'name' is required")
+	}
+	return nil
 }

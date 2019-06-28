@@ -1,16 +1,20 @@
 package oas3models
 
-import "encoding/json"
-
+// An example of the usage of a schema
 type ExampleDoc struct {
-	Summary, Description, ExternalValue string
-	Value json.Marshaler
-}
-func (e *ExampleDoc) MarshalJSON() (_ []byte, err error) {
-	x := make(JSON)
-	if err = marshalObjIfNotNil(e.Value, "value", x); err != nil {return}
-	marshalStrIfLen(e.Summary, "summary", x)
-	marshalStrIfLen(e.Description, "description", x)
-	marshalStrIfLen(e.ExternalValue, "externalValue", x)
-	return json.Marshal(x)
+
+	// Short description for the example.
+	Summary string `json:"summary,omitempty"`
+
+	// Long description for the example. CommonMark syntax MAY be used for rich text representation.
+	Description string `json:"description,omitempty"`
+
+	// Embedded literal example. The value field and externalValue field are mutually exclusive.
+	// To represent examples of media types that cannot naturally represented in JSON or YAML,
+	// use a string value to contain the example, escaping where necessary.
+	Value interface{} `json:"value,omitempty"`
+
+	// A URL that points to the literal example. This provides the capability to reference examples that cannot easily
+	// be included in JSON or YAML documents. The value field and externalValue field are mutually exclusive.
+	ExternalValue string `json:"externalValue,omitempty"`
 }

@@ -1,14 +1,14 @@
 package oas3models
 
-import "encoding/json"
-
+// Contact information for the exposed API.
 type ContactDoc struct {
-	Name, Url, Email string
-}
-func (c *ContactDoc) MarshalJSON() (_ []byte, err error) {
-	x := make(JSON)
-	marshalStrIfLen(c.Name, "name", x)
-	marshalStrIfLen(c.Url, "url", x)
-	marshalStrIfLen(c.Email, "email", x)
-	return json.Marshal(x)
+
+	// The identifying name of the contact person/organization.
+	Name string `json:"name,omitempty"`
+
+	// The URL pointing to the contact information. MUST be in the format of a URL.
+	Url string `json:"url,omitempty"`
+
+	// The email address of the contact person/organization. MUST be in the format of an email address.
+	Email string `json:"email,omitempty"`
 }

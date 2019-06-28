@@ -1,21 +1,25 @@
 package oas3models
 
 import (
-	"encoding/json"
 	"fmt"
 )
 
+// An object representing a Server Variable for server URL template substitution.
 type ServerVariableDoc struct {
-	Enum []string
-	Default, Description string
+
+	// An enumeration of string values to be used if the substitution options are from a limited set.
+	Enum []string `json:"enum,omitempty"`
+
+	// REQUIRED. The default value to use for substitution, and to send, if an alternate value is not supplied.
+	// Unlike the Schema Object's default, this value MUST be provided by the consumer.
+	Default string `json:"default"`
+
+	// An optional description for the server variable. CommonMark syntax MAY be used for rich text representation.
+	Description string `json:"description,omitempty"`
 }
-func (s *ServerVariableDoc) MarshalJSON() (_ []byte, err error) {
+func (s *ServerVariableDoc) Validate() error {
 	if s.Default == "" {
-		return nil, fmt.Errorf("for server variables, 'default' is required")
+		return fmt.Errorf("for server variables, 'default' is required")
 	}
-	x := make(JSON)
-	if err = marshalObjIfNotNil(s.Enum, "enum", x); err != nil {return}
-	marshalStrIfLen(s.Default, "default", x)
-	marshalStrIfLen(s.Description, "description", x)
-	return json.Marshal(x)
+	return nil
 }

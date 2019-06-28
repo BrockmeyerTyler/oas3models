@@ -1,37 +1,69 @@
 package oas3models
 
-import (
-	"encoding/json"
-	"fmt"
-)
+import "fmt"
 
+// The Header Object follows the structure of the Parameter Object with the following changes:
+//
+// 1. name MUST NOT be specified, it is given in the corresponding headers map.
+//
+// 2. in MUST NOT be specified, it is implicitly in header.
+//
+// 3. All traits that are affected by the location MUST be applicable to a location of header (for example, style).
 type HeaderDoc struct {
-	Description                 string
-	Required, Deprecated        bool
-	AllowEmptyValue, Explode 	bool
-	AllowReserved               bool
-	Schema                      SchemaDoc
-	Example                     *ExampleDoc
-	Examples                    ExamplesDoc
-	Style                       StyleSetting
-	Content                     map[MimeType]*MediaTypeDoc
+
+	// A brief description of the parameter. This could contain examples of use. CommonMark syntax MAY be used for rich text representation.
+	Description string `json:"description,omitempty"`
+
+	// Determines whether this parameter is mandatory. If the parameter location is "path", this property is REQUIRED
+	// and its value MUST be true. Otherwise, the property MAY be included and its default value is false.
+	Required string `json:"required,omitempty"`
+
+	// Specifies that a parameter is deprecated and SHOULD be transitioned out of usage.
+	Deprecated bool `json:"deprecated,omitempty"`
+
+	// Sets the ability to pass empty-valued parameters. This is valid only for query parameters and allows sending a
+	// parameter with an empty value. Default value is false. If style is used, and if behavior is n/a
+	// (cannot be serialized), the value of allowEmptyValue SHALL be ignored.
+	AllowEmptyValue bool `json:"allowEmptyValue,omitempty"`
+
+	// Describes how the parameter value will be serialized depending on the type of the parameter value. Default
+	// values (based on value of in): for query - form; for path - simple; for header - simple; for cookie - form.
+	Style StyleSetting `json:"style,omitempty"`
+
+	// When this is true, parameter values of type array or object generate separate parameters for each value of the
+	// array or key-value pair of the map. For other types of parameters this property has no effect. When style is
+	// form, the default value is true. For all other styles, the default value is false.
+	Explode bool `json:"explode,omitempty"`
+
+	// Determines whether the parameter value SHOULD allow reserved characters, as defined by
+	// RFC3986 :/?#[]@!$&'()*+,;= to be included without percent-encoding. This property only applies to parameters
+	// with an in value of query. The default value is false.
+	AllowReserved bool `json:"allowReserved,omitempty"`
+
+	// The schema defining the type used for the parameter.
+	Schema interface{} `json:"schema,omitempty"`
+
+	// Example of the media type. The example SHOULD match the specified schema and encoding properties if present.
+	// The example object is mutually exclusive of the examples object. Furthermore, if referencing a schema which
+	// contains an example, the example value SHALL override the example provided by the schema. To represent examples
+	// of media types that cannot naturally be represented in JSON or YAML, a string value can contain
+	// the example with escaping where necessary.
+	Example interface{} `json:"example,omitempty"`
+
+	// Examples of the media type. Each example SHOULD contain a value in the correct format as specified in the
+	// parameter encoding. The examples object is mutually exclusive of the example object.
+	// Furthermore, if referencing a schema which contains an example, the examples value SHALL
+	// override the example provided by the schema.
+	Examples ExamplesDoc `json:"examples,omitempty"`
+
+	// A map containing the representations for the parameter. The key is the media type and the value describes it.
+	// The map MUST only contain one entry.
+	Content MediaTypesDoc `json:"content,omitempty"`
 }
-func (h *HeaderDoc) MarshalJSON() (_ []byte, err error) {
+func (h *HeaderDoc) Validate() error {
 	if h.Schema == nil && h.Content == nil || h.Schema != nil && h.Content != nil {
-		return nil, fmt.Errorf(
+		return fmt.Errorf(
 			"for headers, 'schema' or 'content' are required, but not both")
 	}
-	x := make(JSON)
-	if err = marshalObjIfNotNil(h.Schema, "schema", x); err != nil {return}
-	if err = marshalObjIfNotNil(h.Example, "example", x); err != nil {return}
-	if err = marshalObjIfNotNil(h.Examples, "examples", x); err != nil {return}
-	if err = marshalObjIfNotNil(h.Content, "content", x); err != nil {return}
-	marshalStrIfLen(h.Description, "description", x)
-	marshalStrIfLen(string(h.Style), "style", x)
-	marshalIfTrue(h.Required, "required", x)
-	marshalIfTrue(h.Deprecated, "deprecated", x)
-	marshalIfTrue(h.AllowEmptyValue, "allowEmptyValue", x)
-	marshalIfTrue(h.Explode, "explode", x)
-	marshalIfTrue(h.AllowReserved, "allowReserved", x)
-	return json.Marshal(x)
+	return nil
 }
