@@ -37,6 +37,7 @@ type SecuritySchemeDoc struct {
 	// OpenId Connect URL to discover OAuth2 configuration values. This MUST be in the form of a URL.
 	OpenIdConnectUrl string
 }
+
 func (s *SecuritySchemeDoc) MarshalJSON() (_ []byte, err error) {
 	if s.Type == "" {
 		return nil, fmt.Errorf("for security schemes, 'type' is required")
@@ -48,15 +49,15 @@ func (s *SecuritySchemeDoc) MarshalJSON() (_ []byte, err error) {
 		if s.Name == "" || s.In == "" {
 			return nil, fmt.Errorf("for `%v` security schemes, 'name' and 'in' are required", SecurityApiKey)
 		}
-		x["name"] = []byte(s.Name)
-		x["in"] = []byte(s.In)
+		marshalStrIfLen(s.Name, "name", x)
+		marshalStrIfLen(string(s.In), "in", x)
 	} else if s.Type == SecurityHttp {
 		if s.Scheme == "" {
 			return nil, fmt.Errorf("for `%v` security schemes, 'scheme' is required", SecurityHttp)
 		}
 		x["scheme"] = []byte(s.Scheme)
 		if s.Scheme == AuthBearer {
-			x["bearerFormat"] = []byte(s.BearerFormat)
+			marshalStrIfLen(s.BearerFormat, "bearerFormat", x)
 		}
 	} else if s.Type == SecurityOauth2 {
 		if s.Flows == nil {
@@ -74,12 +75,14 @@ func (s *SecuritySchemeDoc) MarshalJSON() (_ []byte, err error) {
 		}
 		var err error
 		x["flows"], err = json.Marshal(s.Flows)
-		if err != nil {return nil, err}
+		if err != nil {
+			return nil, err
+		}
 	} else if s.Type == SecurityOpenIdConnect {
 		if s.OpenIdConnectUrl == "" {
 			return nil, fmt.Errorf("for `%v` security schemes, 'openIdConnectUrl is required", SecurityOpenIdConnect)
 		}
-		x["openIdConnectUrl"] = []byte(s.OpenIdConnectUrl)
+		marshalStrIfLen(s.OpenIdConnectUrl, "openIdConnectUrl", x)
 	}
 	return json.Marshal(x)
 }
