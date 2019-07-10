@@ -1,4 +1,4 @@
-package oas3models
+package oasm
 
 import "encoding/json"
 
@@ -21,7 +21,8 @@ type SecurityRequirementDoc struct {
 	// scope names required for the execution. For other security scheme types, the array MUST be empty.
 	Scopes []string
 }
+
 func (s *SecurityRequirementDoc) MarshalJSON() (_ []byte, err error) {
-	x := map[string][]string {s.Name: s.Scopes}
+	x := map[string][]string{s.Name: s.Scopes}
 	return json.Marshal(x)
 }

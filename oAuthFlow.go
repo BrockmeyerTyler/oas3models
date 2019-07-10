@@ -1,4 +1,4 @@
-package oas3models
+package oasm
 
 import (
 	"fmt"
@@ -22,6 +22,7 @@ type OAuthFlowDoc struct {
 	// A map between the scope name and a short description for it.
 	Scopes map[string]string `json:"scopes"`
 }
+
 func (o *OAuthFlowDoc) Validate() error {
 	if o.Scopes == nil {
 		return fmt.Errorf("for oauth flows, 'scopes' is required")

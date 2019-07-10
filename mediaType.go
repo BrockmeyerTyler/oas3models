@@ -1,4 +1,4 @@
-package oas3models
+package oasm
 
 // Each Media Type Object provides schema and examples for the media type identified by its key.
 type MediaTypeDoc struct {

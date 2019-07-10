@@ -1,4 +1,4 @@
-package oas3models
+package oasm
 
 // A single encoding definition applied to a single schema property.
 type EncodingDoc struct {

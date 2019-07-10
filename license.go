@@ -1,4 +1,4 @@
-package oas3models
+package oasm
 
 import "fmt"
 
@@ -11,6 +11,7 @@ type LicenseDoc struct {
 	// A URL to the license used for the API. MUST be in the format of a URL.
 	Url string `json:"url,omitempty"`
 }
+
 func (l *LicenseDoc) Validate() error {
 	if l.Name == "" {
 		return fmt.Errorf("for licenses, 'name' is required")

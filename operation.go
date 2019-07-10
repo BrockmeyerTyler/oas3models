@@ -1,4 +1,4 @@
-package oas3models
+package oasm
 
 import (
 	"fmt"

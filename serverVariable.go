@@ -1,4 +1,4 @@
-package oas3models
+package oasm
 
 import (
 	"fmt"
@@ -17,6 +17,7 @@ type ServerVariableDoc struct {
 	// An optional description for the server variable. CommonMark syntax MAY be used for rich text representation.
 	Description string `json:"description,omitempty"`
 }
+
 func (s *ServerVariableDoc) Validate() error {
 	if s.Default == "" {
 		return fmt.Errorf("for server variables, 'default' is required")

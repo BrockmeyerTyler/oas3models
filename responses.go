@@ -1,4 +1,4 @@
-package oas3models
+package oasm
 
 import (
 	"encoding/json"
@@ -30,18 +30,23 @@ type ResponsesDoc struct {
 	// wildcard character X. For example, 2XX represents all response codes between [200-299]. The following range
 	// definitions are allowed: 1XX, 2XX, 3XX, 4XX, and 5XX. If a response range is defined using an explicit code,
 	// the explicit code definition takes precedence over the range definition for that code.
-	Codes   map[int]*ResponseDoc
+	Codes map[int]*ResponseDoc
 }
+
 func (r *ResponsesDoc) MarshalJSON() (_ []byte, err error) {
 	x := make(JSON)
 	if r.Default != nil {
 		x["default"], err = json.Marshal(r.Default)
-		if err != nil {return}
+		if err != nil {
+			return
+		}
 	}
 	if r.Codes != nil {
 		for key, value := range r.Codes {
 			x[strconv.Itoa(key)], err = json.Marshal(value)
-			if err != nil {return}
+			if err != nil {
+				return
+			}
 		}
 	}
 	return json.Marshal(x)

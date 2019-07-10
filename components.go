@@ -1,4 +1,4 @@
-package oas3models
+package oasm
 
 // Holds a set of reusable objects for different aspects of the OAS.
 // All objects defined within the components object will have no effect on the API unless they are explicitly

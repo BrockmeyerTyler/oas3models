@@ -1,4 +1,4 @@
-package oas3models
+package oasm
 
 // Contact information for the exposed API.
 type ContactDoc struct {

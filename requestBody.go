@@ -1,4 +1,4 @@
-package oas3models
+package oasm
 
 import (
 	"fmt"
@@ -19,6 +19,7 @@ type RequestBodyDoc struct {
 	// Determines if the request body is required in the request. Defaults to false.
 	Required bool `json:"required,omitempty"`
 }
+
 func (r *RequestBodyDoc) Validate() error {
 	if r.Content == nil {
 		return fmt.Errorf("for request bodies, 'content' is required")

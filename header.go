@@ -1,4 +1,4 @@
-package oas3models
+package oasm
 
 import "fmt"
 
@@ -60,6 +60,7 @@ type HeaderDoc struct {
 	// The map MUST only contain one entry.
 	Content MediaTypesDoc `json:"content,omitempty"`
 }
+
 func (h *HeaderDoc) Validate() error {
 	if h.Schema == nil && h.Content == nil || h.Schema != nil && h.Content != nil {
 		return fmt.Errorf(

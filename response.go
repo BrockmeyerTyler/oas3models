@@ -1,4 +1,4 @@
-package oas3models
+package oasm
 
 import (
 	"fmt"
@@ -24,6 +24,7 @@ type ResponseDoc struct {
 	// link, following the naming constraints of the names for Component Objects.
 	Links map[string]*LinkDoc `json:"links,omitempty"`
 }
+
 func (r *ResponseDoc) Validate() error {
 	if r.Description == "" {
 		return fmt.Errorf("for responses, 'description' is required")

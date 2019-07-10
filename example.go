@@ -1,4 +1,4 @@
-package oas3models
+package oasm
 
 // An example of the usage of a schema
 type ExampleDoc struct {

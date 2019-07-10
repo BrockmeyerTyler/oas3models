@@ -1,4 +1,4 @@
-package oas3models
+package oasm
 
 import "fmt"
 
@@ -25,10 +25,10 @@ type InfoDoc struct {
 	// (which is distinct from the OpenAPI Specification version or the API implementation version).
 	Version string `json:"version"`
 }
+
 func (i *InfoDoc) Validate() error {
 	if i.Title == "" || i.Version == "" {
 		return fmt.Errorf("for info, 'title' and 'version' are required")
 	}
 	return nil
 }
-

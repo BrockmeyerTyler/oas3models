@@ -1,4 +1,4 @@
-package oas3models
+package oasm
 
 import (
 	"fmt"
@@ -19,7 +19,7 @@ type ParameterDoc struct {
 	Name string `json:"name"`
 
 	// REQUIRED. The location of the parameter. Possible values are "query", "header", "path" or "cookie".
-	In   InRequest `json:"in"`
+	In InRequest `json:"in"`
 
 	// A brief description of the parameter. This could contain examples of use. CommonMark syntax MAY be used for rich text representation.
 	Description string `json:"description,omitempty"`
@@ -70,6 +70,7 @@ type ParameterDoc struct {
 	// The map MUST only contain one entry.
 	Content MediaTypesDoc `json:"content,omitempty"`
 }
+
 func (p *ParameterDoc) Validate() error {
 	if p.Name == "" || p.In == "" {
 		return fmt.Errorf("for parameters, 'name' and 'in' are required")
