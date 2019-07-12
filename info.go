@@ -1,7 +1,5 @@
 package oasm
 
-import "fmt"
-
 // The object provides metadata about the API. The metadata MAY be used by the clients if needed, and MAY be presented
 // in editing or documentation generation tools for convenience.
 type InfoDoc struct {
@@ -24,11 +22,4 @@ type InfoDoc struct {
 	// REQUIRED. The version of the OpenAPI document
 	// (which is distinct from the OpenAPI Specification version or the API implementation version).
 	Version string `json:"version"`
-}
-
-func (i *InfoDoc) Validate() error {
-	if i.Title == "" || i.Version == "" {
-		return fmt.Errorf("for info, 'title' and 'version' are required")
-	}
-	return nil
 }

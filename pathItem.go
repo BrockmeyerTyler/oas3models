@@ -1,6 +1,9 @@
 package oasm
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"strconv"
+)
 
 // Describes the operations available on a single path. A Path Item MAY be empty, due to ACL constraints.
 // The path itself is still exposed to the documentation viewer but they will not know which operations and
@@ -34,25 +37,32 @@ type PathItemDoc struct {
 
 func (p *PathItemDoc) MarshalJSON() (_ []byte, err error) {
 	x := make(JSON)
-	for key, value := range p.Methods {
-		if x[string(key)], err = json.Marshal(value); err != nil {
-			return
+	if p.Ref != "" {
+		x["$ref"] = json.RawMessage(strconv.Quote(p.Ref))
+	} else {
+		for key, value := range p.Methods {
+			if x[string(key)], err = json.Marshal(value); err != nil {
+				return
+			}
+		}
+		if p.Servers != nil {
+			x["servers"], err = json.Marshal(p.Servers)
+			if err != nil {
+				return
+			}
+		}
+		if p.Parameters != nil {
+			x["parameters"], err = json.Marshal(p.Parameters)
+			if err != nil {
+				return
+			}
+		}
+		if p.Summary != "" {
+			x["summary"] = json.RawMessage(strconv.Quote(p.Summary))
+		}
+		if p.Description != "" {
+			x["description"] = json.RawMessage(strconv.Quote(p.Description))
 		}
 	}
-	if p.Servers != nil {
-		x["servers"], err = json.Marshal(p.Servers)
-		if err != nil {
-			return
-		}
-	}
-	if p.Parameters != nil {
-		x["parameters"], err = json.Marshal(p.Parameters)
-		if err != nil {
-			return
-		}
-	}
-	marshalStrIfLen(p.Ref, "$ref", x)
-	marshalStrIfLen(p.Summary, "summary", x)
-	marshalStrIfLen(p.Description, "description", x)
 	return json.Marshal(x)
 }

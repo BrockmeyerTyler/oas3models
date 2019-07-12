@@ -1,7 +1,5 @@
 package oasm
 
-import "fmt"
-
 // The Header Object follows the structure of the Parameter Object with the following changes:
 //
 // 1. name MUST NOT be specified, it is given in the corresponding headers map.
@@ -59,12 +57,4 @@ type HeaderDoc struct {
 	// A map containing the representations for the parameter. The key is the media type and the value describes it.
 	// The map MUST only contain one entry.
 	Content MediaTypesDoc `json:"content,omitempty"`
-}
-
-func (h *HeaderDoc) Validate() error {
-	if h.Schema == nil && h.Content == nil || h.Schema != nil && h.Content != nil {
-		return fmt.Errorf(
-			"for headers, 'schema' or 'content' are required, but not both")
-	}
-	return nil
 }

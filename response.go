@@ -1,9 +1,5 @@
 package oasm
 
-import (
-	"fmt"
-)
-
 // Describes a single response from an API Operation, including design-time,
 // static links to operations based on the response.
 type ResponseDoc struct {
@@ -23,11 +19,4 @@ type ResponseDoc struct {
 	// A map of operations links that can be followed from the response. The key of the map is a short name for the
 	// link, following the naming constraints of the names for Component Objects.
 	Links map[string]*LinkDoc `json:"links,omitempty"`
-}
-
-func (r *ResponseDoc) Validate() error {
-	if r.Description == "" {
-		return fmt.Errorf("for responses, 'description' is required")
-	}
-	return nil
 }

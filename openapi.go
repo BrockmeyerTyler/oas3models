@@ -1,9 +1,5 @@
 package oasm
 
-import (
-	"fmt"
-)
-
 // This is the root document object of the OpenAPI document.
 type OpenAPIDoc struct {
 
@@ -38,11 +34,4 @@ type OpenAPIDoc struct {
 
 	// Additional external documentation.
 	ExternalDocs *ExternalDocumentationDoc `json:"externalDocs,omitempty"`
-}
-
-func (o *OpenAPIDoc) Validate() error {
-	if o.OpenApi == "" || o.Info == nil || o.Paths == nil {
-		return fmt.Errorf("for open apis, 'openapi', 'info' and 'paths' are required")
-	}
-	return nil
 }

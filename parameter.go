@@ -1,9 +1,5 @@
 package oasm
 
-import (
-	"fmt"
-)
-
 // Describes a single operation parameter.
 //
 // A unique parameter is defined by a combination of a name and location.
@@ -69,14 +65,4 @@ type ParameterDoc struct {
 	// A map containing the representations for the parameter. The key is the media type and the value describes it.
 	// The map MUST only contain one entry.
 	Content MediaTypesDoc `json:"content,omitempty"`
-}
-
-func (p *ParameterDoc) Validate() error {
-	if p.Name == "" || p.In == "" {
-		return fmt.Errorf("for parameters, 'name' and 'in' are required")
-	}
-	if p.Schema == nil && p.Content == nil || p.Schema != nil && p.Content != nil {
-		return fmt.Errorf("for parameters, 'schema' or 'content' are required, but not both")
-	}
-	return nil
 }

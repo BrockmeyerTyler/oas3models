@@ -1,9 +1,5 @@
 package oasm
 
-import (
-	"fmt"
-)
-
 // Describes a single API operation on a path.
 type OperationDoc struct {
 
@@ -58,11 +54,4 @@ type OperationDoc struct {
 	// An alternative server array to service this operation. If an alternative server object is specified at the
 	// Path Item Object or Root level, it will be overridden by this value.
 	Server *ServerDoc `json:"server,omitempty"`
-}
-
-func (o *OperationDoc) Validate() error {
-	if o.Responses == nil {
-		return fmt.Errorf("for operations, 'responses' is required")
-	}
-	return nil
 }

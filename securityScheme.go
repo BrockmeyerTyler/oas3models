@@ -2,7 +2,7 @@ package oasm
 
 import (
 	"encoding/json"
-	"fmt"
+	"strconv"
 )
 
 // Defines a security scheme that can be used by the operations. Supported schemes are HTTP authentication, an API key
@@ -39,50 +39,29 @@ type SecuritySchemeDoc struct {
 }
 
 func (s *SecuritySchemeDoc) MarshalJSON() (_ []byte, err error) {
-	if s.Type == "" {
-		return nil, fmt.Errorf("for security schemes, 'type' is required")
-	}
 	x := make(JSON)
-	marshalStrIfLen(string(s.Type), "type", x)
-	marshalStrIfLen(s.Description, "description", x)
+	x["type"] = json.RawMessage(strconv.Quote(string(s.Type)))
+	if s.Description != "" {
+		x["description"] = json.RawMessage(strconv.Quote(s.Description))
+	}
 	if s.Type == SecurityApiKey {
-		if s.Name == "" || s.In == "" {
-			return nil, fmt.Errorf("for `%v` security schemes, 'name' and 'in' are required", SecurityApiKey)
-		}
-		marshalStrIfLen(s.Name, "name", x)
-		marshalStrIfLen(string(s.In), "in", x)
+		x["name"] = json.RawMessage(strconv.Quote(s.Name))
+		x["in"] = json.RawMessage(strconv.Quote(string(s.In)))
 	} else if s.Type == SecurityHttp {
-		if s.Scheme == "" {
-			return nil, fmt.Errorf("for `%v` security schemes, 'scheme' is required", SecurityHttp)
-		}
-		x["scheme"] = []byte(s.Scheme)
-		if s.Scheme == AuthBearer {
-			marshalStrIfLen(s.BearerFormat, "bearerFormat", x)
+		x["scheme"] = json.RawMessage(strconv.Quote(string(s.Scheme)))
+		if s.Scheme == AuthBearer && s.BearerFormat != "" {
+			x["bearerFormat"] = json.RawMessage(strconv.Quote(s.BearerFormat))
 		}
 	} else if s.Type == SecurityOauth2 {
 		if s.Flows == nil {
-			return nil, fmt.Errorf("for `%v` security schemes, 'flows' is required", SecurityOauth2)
+			s.Flows = make(OAuthFlows)
 		}
-		for key, value := range s.Flows {
-			if value.AuthorizationUrl == "" && (key == OAuthImplicit || key == OAuthAuthorizationCode) {
-				return nil, fmt.Errorf(
-					"for flows of `%v` security schemes, 'authorizationUrl' is required", SecurityOauth2)
-			} else if value.TokenUrl == "" &&
-				(key == OAuthPassword || key == OAuthClientCredentials || key == OAuthAuthorizationCode) {
-				return nil, fmt.Errorf(
-					"for flows of `%v` security schemes, 'tokenUrl' is required", SecurityOauth2)
-			}
-		}
-		var err error
 		x["flows"], err = json.Marshal(s.Flows)
 		if err != nil {
-			return nil, err
+			return
 		}
 	} else if s.Type == SecurityOpenIdConnect {
-		if s.OpenIdConnectUrl == "" {
-			return nil, fmt.Errorf("for `%v` security schemes, 'openIdConnectUrl is required", SecurityOpenIdConnect)
-		}
-		marshalStrIfLen(s.OpenIdConnectUrl, "openIdConnectUrl", x)
+		x["openIdConnectUrl"] = json.RawMessage(strconv.Quote(s.OpenIdConnectUrl))
 	}
 	return json.Marshal(x)
 }

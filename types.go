@@ -2,7 +2,6 @@ package oasm
 
 import (
 	"encoding/json"
-	"strconv"
 )
 
 type JSON map[string]json.RawMessage
@@ -25,9 +24,3 @@ type MediaTypesDoc map[MimeType]*MediaTypeDoc
 
 // Allows configuration of the supported OAuth Flows.
 type OAuthFlows map[OAuthFlowType]*OAuthFlowDoc
-
-func marshalStrIfLen(value string, property string, object JSON) {
-	if value != "" {
-		object[property] = json.RawMessage(strconv.Quote(value))
-	}
-}
