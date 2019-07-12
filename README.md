@@ -1,4 +1,7 @@
 # oasm - Open API Specification Models
+
+[![GoDoc](https://godoc.org/github.com/tjbrockmeyer/oas?status.svg)](https://godoc.org/github.com/tjbrockmeyer/oas)
+
 Golang Models for the Open API Specification Version 3
 
 All models are fully implemented including nearly all descriptions found in the [Open API 3 Specification](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md)  
