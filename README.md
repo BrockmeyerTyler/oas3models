@@ -1,6 +1,6 @@
 # oasm - Open API Specification Models
 
-[![GoDoc](https://godoc.org/github.com/tjbrockmeyer/oas?status.svg)](https://godoc.org/github.com/tjbrockmeyer/oas)
+[![GoDoc](https://godoc.org/github.com/tjbrockmeyer/oasm?status.svg)](https://godoc.org/github.com/tjbrockmeyer/oasm)
 
 Golang Models for the Open API Specification Version 3
 
