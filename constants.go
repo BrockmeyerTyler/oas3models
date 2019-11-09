@@ -3,97 +3,79 @@ package oasm
 type HTTPVerb string
 
 const (
-	HttpGet     = HTTPVerb("get")
-	HttpPut     = HTTPVerb("put")
-	HttpPost    = HTTPVerb("post")
-	HttpDelete  = HTTPVerb("delete")
-	HttpOptions = HTTPVerb("options")
-	HttpHead    = HTTPVerb("head")
-	HttpPatch   = HTTPVerb("patch")
-	HttpTrace   = HTTPVerb("trace")
+	HttpGet     = "get"
+	HttpPut     = "put"
+	HttpPost    = "post"
+	HttpDelete  = "delete"
+	HttpOptions = "options"
+	HttpHead    = "head"
+	HttpPatch   = "patch"
+	HttpTrace   = "trace"
 )
 
-type DataType string
-
 const (
-	DataTypeInteger  = DataType("integer")
-	DataTypeLong     = DataType("long")
-	DataTypeFloat    = DataType("float")
-	DataTypeDouble   = DataType("double")
-	DataTypeString   = DataType("string")
-	DataTypeByte     = DataType("byte")
-	DataTypeBinary   = DataType("binary")
-	DataTypeBoolean  = DataType("boolean")
-	DataTypeDate     = DataType("date")
-	DataTypeDatetime = DataType("dateTime")
-	DataTypePassword = DataType("password")
+	DataTypeInteger  = "integer"
+	DataTypeLong     = "long"
+	DataTypeFloat    = "float"
+	DataTypeDouble   = "double"
+	DataTypeString   = "string"
+	DataTypeByte     = "byte"
+	DataTypeBinary   = "binary"
+	DataTypeBoolean  = "boolean"
+	DataTypeDate     = "date"
+	DataTypeDatetime = "dateTime"
+	DataTypePassword = "password"
 )
 
-type MimeType string
-
 const (
-	MimeJson = MimeType("application/json")
+	MimeJson = "application/json"
 )
 
-type InRequest string
-
 const (
-	InPath   = InRequest("path")
-	InQuery  = InRequest("query")
-	InHeader = InRequest("header")
-	InCookie = InRequest("cookie")
+	InPath   = "path"
+	InQuery  = "query"
+	InHeader = "header"
+	InCookie = "cookie"
 )
 
-type StyleSetting string
-
 const (
-	StyleDefault        = StyleSetting("")
-	StyleMatrix         = StyleSetting("matrix")
-	StyleLabel          = StyleSetting("label")
-	StyleForm           = StyleSetting("form")
-	StyleSimple         = StyleSetting("simple")
-	StyleSpaceDelimited = StyleSetting("spaceDelimited")
-	StylePipeDelimited  = StyleSetting("pipeDelimited")
-	StyleDeepObject     = StyleSetting("deepObject")
+	StyleDefault        = ""
+	StyleMatrix         = "matrix"
+	StyleLabel          = "label"
+	StyleForm           = "form"
+	StyleSimple         = "simple"
+	StyleSpaceDelimited = "spaceDelimited"
+	StylePipeDelimited  = "pipeDelimited"
+	StyleDeepObject     = "deepObject"
 )
 
-type SecurityType string
-
 const (
-	SecurityApiKey        = SecurityType("apiKey")
-	SecurityHttp          = SecurityType("http")
-	SecurityOauth2        = SecurityType("oauth2")
-	SecurityOpenIdConnect = SecurityType("openIdConnect")
+	SecurityApiKey        = "apiKey"
+	SecurityHttp          = "http"
+	SecurityOauth2        = "oauth2"
+	SecurityOpenIdConnect = "openIdConnect"
 )
 
-type SecurityInRequest string
-
 const (
-	SecurityInQuery  = SecurityInRequest("query")
-	SecurityInHeader = SecurityInRequest("header")
-	SecurityInCookie = SecurityInRequest("cookie")
+	SecurityInQuery  = "query"
+	SecurityInHeader = "header"
+	SecurityInCookie = "cookie"
 )
-
-type HTTPAuthScheme string
-
 const (
-	AuthBasic       = HTTPAuthScheme("basic")
-	AuthBearer      = HTTPAuthScheme("bearer")
-	AuthDigest      = HTTPAuthScheme("digest")
-	AuthHoba        = HTTPAuthScheme("hoba")
-	AuthMutual      = HTTPAuthScheme("mutual")
-	AuthNegotiate   = HTTPAuthScheme("negotiate")
-	AuthOauth       = HTTPAuthScheme("oauth")
-	AuthScramSha1   = HTTPAuthScheme("scram-sha-1")
-	AuthScramSha256 = HTTPAuthScheme("scram-sha-256")
-	AuthVapid       = HTTPAuthScheme("vapid")
+	AuthBasic       = "basic"
+	AuthBearer      = "bearer"
+	AuthDigest      = "digest"
+	AuthHoba        = "hoba"
+	AuthMutual      = "mutual"
+	AuthNegotiate   = "negotiate"
+	AuthOauth       = "oauth"
+	AuthScramSha1   = "scram-sha-1"
+	AuthScramSha256 = "scram-sha-256"
+	AuthVapid       = "vapid"
 )
-
-type OAuthFlowType string
-
 const (
-	OAuthImplicit          = OAuthFlowType("implicit")
-	OAuthPassword          = OAuthFlowType("password")
-	OAuthClientCredentials = OAuthFlowType("clientCredentials")
-	OAuthAuthorizationCode = OAuthFlowType("authorizationCode")
+	OAuthImplicit          = "implicit"
+	OAuthPassword          = "password"
+	OAuthClientCredentials = "clientCredentials"
+	OAuthAuthorizationCode = "authorizationCode"
 )

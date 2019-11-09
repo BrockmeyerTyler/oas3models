@@ -1,11 +1,7 @@
 package oasm
 
-import (
-	"fmt"
-)
-
 // Configuration details for a supported OAuth Flow
-type OAuthFlowDoc struct {
+type OAuthFlow struct {
 
 	// REQUIRED for (implicit, authorizationCode).
 	// The authorization URL to be used for this flow. This MUST be in the form of a URL.
@@ -21,11 +17,4 @@ type OAuthFlowDoc struct {
 	// REQUIRED. The available scopes for the OAuth2 security scheme.
 	// A map between the scope name and a short description for it.
 	Scopes map[string]string `json:"scopes"`
-}
-
-func (o *OAuthFlowDoc) Validate() error {
-	if o.Scopes == nil {
-		return fmt.Errorf("for oauth flows, 'scopes' is required")
-	}
-	return nil
 }

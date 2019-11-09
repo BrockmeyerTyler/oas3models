@@ -1,7 +1,5 @@
 package oasm
 
-import "fmt"
-
 // The Header Object follows the structure of the Parameter Object with the following changes:
 //
 // 1. name MUST NOT be specified, it is given in the corresponding headers map.
@@ -9,7 +7,7 @@ import "fmt"
 // 2. in MUST NOT be specified, it is implicitly in header.
 //
 // 3. All traits that are affected by the location MUST be applicable to a location of header (for example, style).
-type HeaderDoc struct {
+type Header struct {
 
 	// A brief description of the parameter. This could contain examples of use. CommonMark syntax MAY be used for rich text representation.
 	Description string `json:"description,omitempty"`
@@ -27,8 +25,8 @@ type HeaderDoc struct {
 	AllowEmptyValue bool `json:"allowEmptyValue,omitempty"`
 
 	// Describes how the parameter value will be serialized depending on the type of the parameter value. Default
-	// values (based on value of in): for query - form; for path - simple; for header - simple; for cookie - form.
-	Style StyleSetting `json:"style,omitempty"`
+	// values (based on value of `in`): for query - form; for path - simple; for header - simple; for cookie - form.
+	Style string `json:"style,omitempty"`
 
 	// When this is true, parameter values of type array or object generate separate parameters for each value of the
 	// array or key-value pair of the map. For other types of parameters this property has no effect. When style is
@@ -54,17 +52,9 @@ type HeaderDoc struct {
 	// parameter encoding. The examples object is mutually exclusive of the example object.
 	// Furthermore, if referencing a schema which contains an example, the examples value SHALL
 	// override the example provided by the schema.
-	Examples ExamplesDoc `json:"examples,omitempty"`
+	Examples ExamplesMap `json:"examples,omitempty"`
 
 	// A map containing the representations for the parameter. The key is the media type and the value describes it.
 	// The map MUST only contain one entry.
-	Content MediaTypesDoc `json:"content,omitempty"`
-}
-
-func (h *HeaderDoc) Validate() error {
-	if h.Schema == nil && h.Content == nil || h.Schema != nil && h.Content != nil {
-		return fmt.Errorf(
-			"for headers, 'schema' or 'content' are required, but not both")
-	}
-	return nil
+	Content MediaTypesMap `json:"content,omitempty"`
 }

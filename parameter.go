@@ -1,13 +1,9 @@
 package oasm
 
-import (
-	"fmt"
-)
-
 // Describes a single operation parameter.
 //
 // A unique parameter is defined by a combination of a name and location.
-type ParameterDoc struct {
+type Parameter struct {
 
 	// REQUIRED. The name of the parameter. Parameter names are case sensitive.
 	//
@@ -19,7 +15,7 @@ type ParameterDoc struct {
 	Name string `json:"name"`
 
 	// REQUIRED. The location of the parameter. Possible values are "query", "header", "path" or "cookie".
-	In InRequest `json:"in"`
+	In string `json:"in"`
 
 	// A brief description of the parameter. This could contain examples of use. CommonMark syntax MAY be used for rich text representation.
 	Description string `json:"description,omitempty"`
@@ -38,7 +34,7 @@ type ParameterDoc struct {
 
 	// Describes how the parameter value will be serialized depending on the type of the parameter value. Default
 	// values (based on value of in): for query - form; for path - simple; for header - simple; for cookie - form.
-	Style StyleSetting `json:"style,omitempty"`
+	Style string `json:"style,omitempty"`
 
 	// When this is true, parameter values of type array or object generate separate parameters for each value of the
 	// array or key-value pair of the map. For other types of parameters this property has no effect. When style is
@@ -64,19 +60,9 @@ type ParameterDoc struct {
 	// parameter encoding. The examples object is mutually exclusive of the example object.
 	// Furthermore, if referencing a schema which contains an example, the examples value SHALL
 	// override the example provided by the schema.
-	Examples ExamplesDoc `json:"examples,omitempty"`
+	Examples ExamplesMap `json:"examples,omitempty"`
 
 	// A map containing the representations for the parameter. The key is the media type and the value describes it.
 	// The map MUST only contain one entry.
-	Content MediaTypesDoc `json:"content,omitempty"`
-}
-
-func (p *ParameterDoc) Validate() error {
-	if p.Name == "" || p.In == "" {
-		return fmt.Errorf("for parameters, 'name' and 'in' are required")
-	}
-	if p.Schema == nil && p.Content == nil || p.Schema != nil && p.Content != nil {
-		return fmt.Errorf("for parameters, 'schema' or 'content' are required, but not both")
-	}
-	return nil
+	Content MediaTypesMap `json:"content,omitempty"`
 }

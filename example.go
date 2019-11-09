@@ -1,7 +1,7 @@
 package oasm
 
 // An example of the usage of a schema
-type ExampleDoc struct {
+type Example struct {
 
 	// Short description for the example.
 	Summary string `json:"summary,omitempty"`

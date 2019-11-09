@@ -1,11 +1,7 @@
 package oasm
 
-import (
-	"fmt"
-)
-
 // An object representing a Server Variable for server URL template substitution.
-type ServerVariableDoc struct {
+type ServerVariable struct {
 
 	// An enumeration of string values to be used if the substitution options are from a limited set.
 	Enum []string `json:"enum,omitempty"`
@@ -16,11 +12,4 @@ type ServerVariableDoc struct {
 
 	// An optional description for the server variable. CommonMark syntax MAY be used for rich text representation.
 	Description string `json:"description,omitempty"`
-}
-
-func (s *ServerVariableDoc) Validate() error {
-	if s.Default == "" {
-		return fmt.Errorf("for server variables, 'default' is required")
-	}
-	return nil
 }

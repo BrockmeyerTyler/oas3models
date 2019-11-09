@@ -11,7 +11,7 @@ import "encoding/json"
 //
 // When a list of Security Requirement Objects is defined on the Open API object or Operation Object, only one of
 // Security Requirement Objects in the list needs to be satisfied to authorize the request.
-type SecurityRequirementDoc struct {
+type SecurityRequirement struct {
 
 	// Each name MUST correspond to a security scheme which is declared in the Security Schemes under the
 	// Components Object.
@@ -22,7 +22,9 @@ type SecurityRequirementDoc struct {
 	Scopes []string
 }
 
-func (s *SecurityRequirementDoc) MarshalJSON() (_ []byte, err error) {
+func (s *SecurityRequirement) MarshalJSON() (_ []byte, err error) {
 	x := map[string][]string{s.Name: s.Scopes}
 	return json.Marshal(x)
 }
+
+// TODO: Write UnmarshalJSON()

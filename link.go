@@ -11,7 +11,7 @@ import "encoding/json"
 //
 // For computing links, and providing instructions to execute them, a runtime expression is used for accessing values
 // in an operation and using them as parameters while invoking the linked operation.
-type LinkDoc struct {
+type Link struct {
 
 	// A relative or absolute reference to an OAS operation. This field is mutually exclusive of the operationId field,
 	// and MUST point to an Operation Object. Relative operationRef values MAY be used to locate an
@@ -35,5 +35,5 @@ type LinkDoc struct {
 	RequestBody json.Marshaler `json:"requestBody,omitempty"`
 
 	// A server object to be used by the target operation.
-	Server *ServerDoc `json:"server,omitempty"`
+	Server Server `json:"server,omitempty"`
 }

@@ -5,7 +5,7 @@ import "encoding/json"
 // Describes the operations available on a single path. A Path Item MAY be empty, due to ACL constraints.
 // The path itself is still exposed to the documentation viewer but they will not know which operations and
 // parameters are available.
-type PathItemDoc struct {
+type PathItem struct {
 
 	// Allows for an external definition of this path item. The referenced structure MUST be in the format of a Path
 	// Item Object. If there are conflicts between the referenced definition and this Path Item's definition,
@@ -20,22 +20,22 @@ type PathItemDoc struct {
 	Description string
 
 	// A map of HTTP methods to their operation definitions.
-	Methods map[HTTPVerb]*OperationDoc
+	Methods map[string]Operation
 
 	// An alternative server array to service all operations in this path.
-	Servers []*ServerDoc
+	Servers []Server
 
 	// A list of parameters that are applicable for all the operations described under this path. These parameters can
 	// be overridden at the operation level, but cannot be removed there. The list MUST NOT include duplicated
 	// parameters. A unique parameter is defined by a combination of a name and location. The list can use the
 	// Reference Object to link to parameters that are defined at the OpenAPI Object's components/parameters.
-	Parameters []*ParameterDoc
+	Parameters []Parameter
 }
 
-func (p *PathItemDoc) MarshalJSON() (_ []byte, err error) {
+func (p *PathItem) MarshalJSON() (_ []byte, err error) {
 	x := make(JSON)
 	for key, value := range p.Methods {
-		if x[string(key)], err = json.Marshal(value); err != nil {
+		if x[key], err = json.Marshal(value); err != nil {
 			return
 		}
 	}

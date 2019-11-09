@@ -1,7 +1,7 @@
 package oasm
 
 // Each Media Type Object provides schema and examples for the media type identified by its key.
-type MediaTypeDoc struct {
+type MediaType struct {
 
 	// The schema defining the type used for the request body.
 	Schema interface{} `json:"schema,omitempty"`
@@ -14,10 +14,10 @@ type MediaTypeDoc struct {
 	// Examples of the media type. Each example object SHOULD match the media type and specified schema if present.
 	// The examples object is mutually exclusive of the example object. Furthermore, if referencing a schema which
 	// contains an example, the examples value SHALL override the example provided by the schema.
-	Examples map[string]*ExampleDoc `json:"examples,omitempty"`
+	Examples map[string]Example `json:"examples,omitempty"`
 
 	// A map between a property name and its encoding information. The key, being the property name, MUST exist in the
 	// schema as a property. The encoding object SHALL only apply to requestBody objects when the media type is
 	// multipart or application/x-www-form-urlencoded.
-	Encoding map[string]*EncodingDoc `json:"encoding,omitempty"`
+	Encoding map[string]EncodingDoc `json:"encoding,omitempty"`
 }

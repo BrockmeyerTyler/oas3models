@@ -2,6 +2,7 @@ package oasm
 
 import (
 	"encoding/json"
+	"fmt"
 	"strconv"
 )
 
@@ -16,12 +17,12 @@ import (
 //
 // The Responses Object MUST contain at least one response code,
 // and it SHOULD be the response for a successful operation call.
-type ResponsesDoc struct {
+type Responses struct {
 
 	// The documentation of responses other than the ones declared for specific HTTP response codes. Use this field
 	// to cover undeclared responses. A Reference Object can link to a response that the OpenAPI Object's
 	// components/responses section defines.
-	Default *ResponseDoc
+	Default *Response
 
 	// Any HTTP status code can be used as the property name, but only one property per code, to describe the expected
 	// response for that HTTP status code. A Reference Object can link to a response that is defined in the OpenAPI
@@ -30,24 +31,56 @@ type ResponsesDoc struct {
 	// wildcard character X. For example, 2XX represents all response codes between [200-299]. The following range
 	// definitions are allowed: 1XX, 2XX, 3XX, 4XX, and 5XX. If a response range is defined using an explicit code,
 	// the explicit code definition takes precedence over the range definition for that code.
-	Codes map[int]*ResponseDoc
+	Codes map[int]Response
 }
 
-func (r *ResponsesDoc) MarshalJSON() (_ []byte, err error) {
+func (r *Responses) MarshalJSON() ([]byte, error) {
 	x := make(JSON)
+	var err error
 	if r.Default != nil {
 		x["default"], err = json.Marshal(r.Default)
 		if err != nil {
-			return
+			return nil, err
 		}
 	}
 	if r.Codes != nil {
 		for key, value := range r.Codes {
 			x[strconv.Itoa(key)], err = json.Marshal(value)
 			if err != nil {
-				return
+				return nil, err
 			}
 		}
 	}
 	return json.Marshal(x)
+}
+
+func (r *Responses) UnmarshalJSON(b []byte) error {
+	r.Codes = make(map[int]Response)
+	var m map[string]interface{}
+	err := json.Unmarshal(b, &m)
+	if err != nil {
+		return err
+	}
+	for k, v := range m {
+		if k == "default" {
+			mv, _ := json.Marshal(v)
+			err = json.Unmarshal(mv, &r.Default)
+			if err != nil {
+				return err
+			}
+		} else {
+			i, err := strconv.ParseInt(k, 10, 32)
+			if err != nil {
+				return fmt.Errorf("valid values for response keys are 'default' and integer numbers")
+			}
+			var response Response
+			mv, _ := json.Marshal(v)
+			err = json.Unmarshal(mv, &response)
+			if err != nil {
+				return err
+			}
+			r.Codes[int(i)] = response
+		}
+	}
+	return nil
 }
