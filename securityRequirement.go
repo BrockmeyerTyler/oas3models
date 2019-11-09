@@ -22,7 +22,7 @@ type SecurityRequirement struct {
 	Scopes []string
 }
 
-func (s *SecurityRequirement) MarshalJSON() (_ []byte, err error) {
+func (s SecurityRequirement) MarshalJSON() (_ []byte, err error) {
 	x := map[string][]string{s.Name: s.Scopes}
 	return json.Marshal(x)
 }

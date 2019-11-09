@@ -9,7 +9,7 @@ type OpenAPIDoc struct {
 	OpenApi string `json:"openapi"`
 
 	// REQUIRED. Provides metadata about the API. The metadata MAY be used by tooling as required.
-	Info Info `json:"info"`
+	Info *Info `json:"info"`
 
 	// An array of Server Objects, which provide connectivity information to a target server. If the servers property
 	// is not provided, or is an empty array, the default value would be a Server Object with a url value of /.
@@ -33,5 +33,5 @@ type OpenAPIDoc struct {
 	Tags []Tag `json:"tags,omitempty"`
 
 	// Additional external documentation.
-	ExternalDocs ExternalDocumentation `json:"externalDocs,omitempty"`
+	ExternalDocs *ExternalDocumentation `json:"externalDocs,omitempty"`
 }

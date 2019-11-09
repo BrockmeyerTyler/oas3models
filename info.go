@@ -14,10 +14,10 @@ type Info struct {
 	TermsOfService string `json:"termsOfService,omitempty"`
 
 	// The contact information for the exposed API.
-	Contact ContactDoc `json:"contact,omitempty"`
+	Contact *ContactDoc `json:"contact,omitempty"`
 
 	// The license information for the exposed API.
-	License LicenseDoc `json:"license,omitempty"`
+	License *LicenseDoc `json:"license,omitempty"`
 
 	// REQUIRED. The version of the OpenAPI document
 	// (which is distinct from the OpenAPI Specification version or the API implementation version).

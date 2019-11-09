@@ -11,5 +11,5 @@ type Tag struct {
 	Description string `json:"description,omitempty"`
 
 	// Additional external documentation for this tag.
-	ExternalDocs ExternalDocumentation `json:"externalDocs,omitempty"`
+	ExternalDocs *ExternalDocumentation `json:"externalDocs,omitempty"`
 }

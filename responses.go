@@ -34,7 +34,7 @@ type Responses struct {
 	Codes map[int]Response
 }
 
-func (r *Responses) MarshalJSON() ([]byte, error) {
+func (r Responses) MarshalJSON() ([]byte, error) {
 	x := make(JSON)
 	var err error
 	if r.Default != nil {

@@ -35,5 +35,5 @@ type Link struct {
 	RequestBody json.Marshaler `json:"requestBody,omitempty"`
 
 	// A server object to be used by the target operation.
-	Server Server `json:"server,omitempty"`
+	Server *Server `json:"server,omitempty"`
 }
