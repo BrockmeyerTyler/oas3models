@@ -32,7 +32,7 @@ type PathItem struct {
 	Parameters []Parameter
 }
 
-func (p *PathItem) MarshalJSON() (_ []byte, err error) {
+func (p PathItem) MarshalJSON() (_ []byte, err error) {
 	x := make(JSON)
 	for key, value := range p.Methods {
 		if x[key], err = json.Marshal(value); err != nil {
@@ -56,3 +56,5 @@ func (p *PathItem) MarshalJSON() (_ []byte, err error) {
 	marshalStrIfLen(p.Description, "description", x)
 	return json.Marshal(x)
 }
+
+// TODO: UnmarshalJSON()
