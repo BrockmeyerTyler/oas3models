@@ -1,7 +1,5 @@
 package oasm
 
-import "encoding/json"
-
 // Lists the required security schemes to execute this operation. The name used for each property MUST correspond to a
 // security scheme declared in the Security Schemes under the Components Object.
 //
@@ -11,20 +9,10 @@ import "encoding/json"
 //
 // When a list of Security Requirement Objects is defined on the Open API object or Operation Object, only one of
 // Security Requirement Objects in the list needs to be satisfied to authorize the request.
-type SecurityRequirement struct {
-
-	// Each name MUST correspond to a security scheme which is declared in the Security Schemes under the
-	// Components Object.
-	Name string
-
-	// If the security scheme is of type "oauth2" or "openIdConnect", then the value is a list of
-	// scope names required for the execution. For other security scheme types, the array MUST be empty.
-	Scopes []string
-}
-
-func (s SecurityRequirement) MarshalJSON() (_ []byte, err error) {
-	x := map[string][]string{s.Name: s.Scopes}
-	return json.Marshal(x)
-}
-
-// TODO: Write UnmarshalJSON()
+//
+// Each name MUST correspond to a security scheme which is declared in the Security Schemes under the
+// Components Object.
+//
+// If the security scheme is of type "oauth2" or "openIdConnect", then the value is a list of
+// scope names required for the execution. For other security scheme types, the array MUST be empty.
+type SecurityRequirement map[string][]string
